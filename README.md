@@ -56,3 +56,9 @@ go get github.com/stretchr/testify
 ````
 docker run --rm --name world-cup-api -p 3000:3000 -v "$PWD":/usr/src/app -w /usr/src/app golang:1.17 go run src/main.go
 ````
+
+## Rund the test with Docker
+
+````
+docker run --rm --name world-cup-api -p 3000:3000 -v "$PWD":/usr/src/app -w /usr/src/app golang:1.17 go test -v src/domain/service/champion_service_test.go
+````
