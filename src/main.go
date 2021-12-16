@@ -8,9 +8,10 @@ import (
 	"gorm.io/gorm"
 )
 
-type Country struct {
-	ID   uint   `json:"id,omitempty" gorm:"primaryKey"`
-	Name string `json:"name" binding:"required"`
+type Champion struct {
+	ID      uint   `json:"id,omitempty" gorm:"primaryKey"`
+	Country string `json:"country" binding:"required"`
+	Year    int    `json:"year" binding:"required"`
 }
 
 func createConnection() *gorm.DB {
@@ -21,7 +22,7 @@ func createConnection() *gorm.DB {
 	}
 
 	// Migrate the schema
-	db.AutoMigrate(&Country{})
+	db.AutoMigrate(&Champion{})
 
 	return db
 }
@@ -29,11 +30,11 @@ func createConnection() *gorm.DB {
 func main() {
 	router := gin.Default()
 
-	router.POST("/countries", func(c *gin.Context) {
+	router.POST("/champions", func(c *gin.Context) {
 
-		var country Country
+		var champion Champion
 
-		if err := c.ShouldBindJSON(&country); err != nil {
+		if err := c.ShouldBindJSON(&champion); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -42,33 +43,35 @@ func main() {
 
 		db, _ := sqlLite.DB()
 
-		sqlLite.Create(&country)
+		sqlLite.Create(&champion)
 
 		db.Close()
 
-		c.JSON(http.StatusOK, country)
+		c.JSON(http.StatusOK, champion)
 	})
 
-	router.GET("/countries", func(c *gin.Context) {
+	router.GET("/champions", func(c *gin.Context) {
 		sqlLite := createConnection()
 
-		var countries []Country
+		var champions []Champion
 
-		// countries[0] = Country{
-		// 	Name: "Brasil",
+		// champions[0] = Champion{
+		// 	Country: "Brasil",
+		// 	Year: 1970,
 		// }
 
-		// countries[1] = Country{
-		// 	Name: "Argentina",
+		// champions[1] = Champion{
+		// 	Country: "Argentina",
+		// 	Year: 1986,
 		// }
 
 		db, _ := sqlLite.DB()
 
-		sqlLite.Find(&countries)
+		sqlLite.Find(&champions)
 
 		db.Close()
 
-		c.JSON(http.StatusOK, countries)
+		c.JSON(http.StatusOK, champions)
 	})
 
 	router.Run(":3000")
