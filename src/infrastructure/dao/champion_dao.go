@@ -28,7 +28,7 @@ func (dao ChampionDAO) List() []entity.Champion {
 
 	db, _ := sqlLite.DB()
 
-	sqlLite.Find(&champions)
+	sqlLite.Find(champions)
 
 	db.Close()
 

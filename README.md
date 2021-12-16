@@ -1,6 +1,6 @@
 # WORD CUP API
 
-Projeto para aprender a fazer uma api com golang
+This projeto to learn the construct an api with golang
 
 Official Site: https://go.dev/
 
@@ -43,6 +43,12 @@ GORM and SQL LITE 3
 ````
 go get -u gorm.io/gorm
 go get -u gorm.io/driver/sqlite
+````
+
+TESTIFY
+
+````
+go get github.com/stretchr/testify
 ````
 
 ## Rund the applications with Docker
