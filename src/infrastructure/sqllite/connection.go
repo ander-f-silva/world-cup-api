@@ -1,7 +1,7 @@
 package sqllite
 
 import (
-	"world-cup-api/src/domain"
+	"world-cup-api/src/domain/entity"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -15,7 +15,7 @@ func GetInstance() *gorm.DB {
 	}
 
 	// Migrate the schema
-	db.AutoMigrate(&domain.Country{})
+	db.AutoMigrate(&entity.Champion{})
 
 	return db
 }

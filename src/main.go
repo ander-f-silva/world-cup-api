@@ -1,7 +1,7 @@
 package main
 
 import (
-	"world-cup-api/src/application"
+	championApi "world-cup-api/src/application/api"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,9 +9,8 @@ import (
 func main() {
 	router := gin.Default()
 
-	router.POST("/countries", application.Create)
-
-	router.GET("/countries", application.List)
+	router.POST("/champions", championApi.Create)
+	router.GET("/champions", championApi.List)
 
 	router.Run(":3000")
 }

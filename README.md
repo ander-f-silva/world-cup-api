@@ -1,16 +1,18 @@
 # WORD CUP API
 
+Projeto para aprender a fazer uma api com golang
+
 Official Site: https://go.dev/
+
 Documentation Site https://go.dev/doc/
 
-Libraries:
+## Libraries:
 
 - GIN: Wrapper for protocol HTTP => https://github.com/gin-gonic/gin;
 - GORM: Model ORM for Golang => https://gorm.io/index.html
 - TESTIFY: Asserts and Mock => https://github.com/stretchr/testify 
 
-
-Utilities: 
+## Utils: 
 
 - GOLINT: Analyses Static => https://golangci-lint.run/
 
@@ -28,7 +30,7 @@ To do start dependecy
  go mod init world-cup-api
  ````
 
-INSTALL 
+## Install the dependencies 
 
 GIN
 
@@ -41,4 +43,10 @@ GORM and SQL LITE 3
 ````
 go get -u gorm.io/gorm
 go get -u gorm.io/driver/sqlite
+````
+
+## Rund the applications with Docker
+
+````
+docker run --rm --name world-cup-api -p 3000:3000 -v "$PWD":/usr/src/app -w /usr/src/app golang:1.17 go run src/main.go
 ````
