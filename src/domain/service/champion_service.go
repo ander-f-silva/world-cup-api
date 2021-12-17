@@ -28,7 +28,7 @@ func (championBusiness ChampionBusiness) Create(champion *entity.Champion) error
 	log.Printf("[event: create] Champions found: %v", championFound)
 
 	if championFound.IsExist() {
-		return fmt.Errorf("champion %d already register ", champion.Year)
+		return fmt.Errorf("champion %d already register", champion.Year)
 	}
 
 	championBusiness.championRepository.Create(champion)

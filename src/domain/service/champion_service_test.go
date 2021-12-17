@@ -29,7 +29,7 @@ func TestChampionBusinessCreate(t *testing.T) {
 			title:              "Should not create the champion already registed",
 			paramDummy:         &entity.Champion{Country: "Fraça", Year: 1998},
 			answerFindYearMock: &entity.Champion{ID: 2},
-			expected:           fmt.Errorf("champion %d already register", 2),
+			expected:           fmt.Errorf("champion %d already register", 1998),
 		},
 	}
 
@@ -37,7 +37,8 @@ func TestChampionBusinessCreate(t *testing.T) {
 		t.Run(tc.title, func(t *testing.T) {
 			championMockDAO := new(dao.ChampionMockDAO)
 
-			championMockDAO.On("Create", tc.paramDummy.Year).Return(tc.answerFindYearMock)
+			championMockDAO.On("FindByYear", tc.paramDummy.Year).Return(tc.answerFindYearMock)
+			championMockDAO.On("Create", tc.paramDummy).Once()
 
 			championBusiness := ChampionBusiness{
 				championRepository: championMockDAO,
@@ -46,12 +47,7 @@ func TestChampionBusinessCreate(t *testing.T) {
 			result := championBusiness.Create(tc.paramDummy)
 
 			assert := assert.New(t)
-
-			if assert.NotNil(result) {
-				assert.Equal(tc.expected, result)
-			} else {
-				assert.Nil(result)
-			}
+			assert.Equal(tc.expected, result)
 		})
 	}
 }
