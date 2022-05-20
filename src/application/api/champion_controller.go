@@ -3,37 +3,36 @@ package api
 import (
 	"net/http"
 	"world-cup-api/src/domain/entity"
-	"world-cup-api/src/domain/service"
+	"world-cup-api/src/domain/usercase"
 
 	"github.com/gin-gonic/gin"
 )
 
-func Create(c *gin.Context) {
+func Create(context *gin.Context) {
 	var champion entity.Champion
 
-	if err := c.ShouldBindJSON(&champion); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := context.ShouldBindJSON(&champion); err != nil {
+		context.JSONP(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	championService := service.GetChampionServiceInstance()
+	addChampions := usercase.AddChampionsFactory()
 
-	err := championService.Create(&champion)
+	addChampions.Effect(&champion)
 
-	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, err)
-		return
-	}
-
-	c.JSON(http.StatusOK, champion)
+	context.JSONP(http.StatusOK, champion)
 }
 
-func List(c *gin.Context) {
-	var champions []entity.Champion
-
-	championService := service.GetChampionServiceInstance()
-
-	champions = championService.List()
-
-	c.JSON(http.StatusOK, champions)
-}
+//func List(context *gin.Context) {
+//	sqlite := createConnection()
+//
+//	var champion []Champion
+//
+//	db, _ := sqlite.DB()
+//
+//	sqlite.Find(&champion)
+//
+//	db.Close()
+//
+//	context.JSONP(http.StatusOK, champion)
+//}
