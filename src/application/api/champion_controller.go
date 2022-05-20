@@ -23,16 +23,8 @@ func Create(context *gin.Context) {
 	context.JSONP(http.StatusOK, champion)
 }
 
-//func List(context *gin.Context) {
-//	sqlite := createConnection()
-//
-//	var champion []Champion
-//
-//	db, _ := sqlite.DB()
-//
-//	sqlite.Find(&champion)
-//
-//	db.Close()
-//
-//	context.JSONP(http.StatusOK, champion)
-//}
+func List(context *gin.Context) {
+	listChampions := usercase.ListChampionsFactory()
+
+	context.JSONP(http.StatusOK, listChampions.FindAll())
+}
